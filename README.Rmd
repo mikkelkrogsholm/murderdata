@@ -1,0 +1,49 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/murderdata)](http://cran.r-project.org/package=murderdata)
+
+# murderdata
+
+The goal of murderdata is to make it easy to get data from the Murder Accountability Project. With data from the Murder Accountability Project you can determine how often police departments in american communities clear a homicide through arrest using the clearances data. You can also explore individual cases reported to the FBI or obtained by the Murder Accountability Project under local Freedom of Information Acts. Using the supplementary data, you can look for patterns in the occurrence of specific types of homicides and how often police identified the offender. Read more at <http://murderdata.org/>.
+
+## Installation
+
+You can install murderdata from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("mikkelkrogsholm/murderdata")
+```
+
+## Example
+
+This is a basic example which shows you how to get data:
+
+### Clearences
+With data from the Murder Accountability Project you can determine how often police departments in american communities clear a homicide through arrest using the `clearances` data.
+```{r example_1, message=FALSE, warning=FALSE}
+clearances <- murderdata::get_murderdata()
+dplyr::glimpse(clearances)
+```
+
+### Supplementary
+You can also explore individual cases reported to the FBI or obtained by the Murder Accountability Project under local Freedom of Information Acts. Using the `supplementary` data, you can look for patterns in the occurrence of specific types of homicides and how often police identified the offender.
+```{r example_2, message=FALSE, warning=FALSE}
+supplementary <- murderdata::get_murderdata("supplementary")
+dplyr::glimpse(supplementary)
+```
+
+## Further
+See the vignette in the package on how to look for serial killers...
