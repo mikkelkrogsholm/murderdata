@@ -1,0 +1,54 @@
+---
+title: "Hunting for Serial Killers"
+author: "Mikkel Freltoft Krogsholm"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Hunting for Serial Killers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette tries to implement the [SPSS code](https://www.dropbox.com/s/49i2mw0caswn8y0/Algorithm.pdf?dl=0) used by the Murder Accountability Project to look for serial killers.
+
+### Load libraries
+```{r libs, message=FALSE, warning=FALSE}
+library(murderdata)
+library(dplyr)
+library(magrittr)
+```
+
+### Get the data
+We are using the supplementary data set since it has the most detal.
+```{r get_data, message=FALSE, warning=FALSE}
+murder_data <- get_murderdata("supplementary")
+```
+
+### Do some data summarization
+We will create a data set that summarizes the data for us. We will group by the sex of the victim, the country of the murder and the weapon used. Then we will summarize total murders, cases solved and the percentage solved.
+```{r serial_killers}
+serial_killers <- murder_data %>%
+  mutate(Solved = Solved %>% factor() %>% as.numeric() %>% subtract(1)) %>%
+  group_by(VicSex, CNTYFIPS, Weapon) %>%
+  summarise(total = n(),
+            solved = sum(Solved),
+            percentage = mean(Solved)) %>%
+  ungroup() 
+```
+
+### Possible uncaught serial killers
+We want to find possible serial killers. They are (as far as I know) usually men who target women. So we will focus on female victims only, then find counties where more than 33% of a specific type of murder (by choice of weapon) has gone unsolved.
+```{r possible_serial_killers}
+possible_serial_killers <- serial_killers %>%
+  filter(VicSex == "Female",
+         percentage <= .33) %>%
+  mutate(unsolved = total - solved) %>%
+  arrange(desc(unsolved))
+```
+
+### Lets have a look
+```{r summary}
+possible_serial_killers %>% select(-VicSex) %>% head() %>% knitr::kable()
+```
+
+Here we see that in Fulton County in Georgia we have over a 133 strangled female victims, but only 33 of them have been solved... Is there a potential serial killer lurking in Fulton County?
