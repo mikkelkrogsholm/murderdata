@@ -20,4 +20,8 @@ Imports:
     utils,
     base
 Suggests:
-    dplyr
+    dplyr,
+    knitr,
+    rmarkdown,
+    magrittr
+VignetteBuilder: knitr
