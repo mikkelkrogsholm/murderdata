@@ -4,7 +4,14 @@
 \name{sk_by_country}
 \alias{sk_by_country}
 \title{Serial Killers by Country}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 20 rows and 5 columns.}
+\format{A tibble with 20 rows and 5 variables:
+\describe{
+  \item{country}{Country name}
+  \item{no_sk}{Number of Serial Killers}
+  \item{pct_sk}{Percent of Serial Killers}
+  \item{share_world_pop}{Country's Share of World Population}
+  \item{ratio}{Ratio}
+}}
 \source{
 Radford University/FGCU Serial Killer Database
 }

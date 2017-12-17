@@ -13,7 +13,7 @@
 #' \describe{
 #'   \item{country}{Country name}
 #'   \item{no_sk}{Number of Serial Killers}
-#'   \item{pct_sk}{% of Serial Killers}
+#'   \item{pct_sk}{Percent of Serial Killers}
 #'   \item{share_world_pop}{Country's Share of World Population}
 #'   \item{ratio}{Ratio}
 #' }
