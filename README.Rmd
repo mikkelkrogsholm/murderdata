@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/murderdata)](http://cran.r-project.org/package=murderdata)
 
+See package webpage her: https://mikkelkrogsholm.github.io/murderdata/
+
 # murderdata
 
 The goal of murderdata is to make it easy to get data from the [Murder Accountability Project](http://murderdata.org/). With data from the Murder Accountability Project you can determine how often police departments in american communities clear a homicide through arrest using the clearances data. You can also explore individual cases reported to the FBI or obtained by the Murder Accountability Project under local Freedom of Information Acts. Using the supplementary data, you can look for patterns in the occurrence of specific types of homicides and how often police identified the offender. Read more at <http://murderdata.org/>.
