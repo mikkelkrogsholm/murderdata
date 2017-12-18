@@ -36,15 +36,14 @@ This is a basic example which shows you how to get data:
 ### Clearences
 With data from the Murder Accountability Project you can determine how often police departments in american communities clear a homicide through arrest using the `clearances` data.
 ```{r example_1, message=FALSE, warning=FALSE}
-clearances <- murderdata::get_murderdata()
-dplyr::glimpse(clearances)
+library(murderdata)
+dplyr::glimpse(md_clearances)
 ```
 
 ### Supplementary
 You can also explore individual cases reported to the FBI or obtained by the Murder Accountability Project under local Freedom of Information Acts. Using the `supplementary` data, you can look for patterns in the occurrence of specific types of homicides and how often police identified the offender.
 ```{r example_2, message=FALSE, warning=FALSE}
-supplementary <- murderdata::get_murderdata("supplementary")
-dplyr::glimpse(supplementary)
+dplyr::glimpse(md_supplementary)
 ```
 
 ## Further
