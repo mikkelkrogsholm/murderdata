@@ -18,29 +18,33 @@ library(dplyr)
 library(magrittr)
 ```
 
-### Get the data
-We are using the supplementary data set since it has the most detal.
-```{r get_data, message=FALSE, warning=FALSE}
-murder_data <- get_murderdata("supplementary")
+### Look at the data
+We are using the supplementary data set since it has the most detail.
+```{r look_data, message=FALSE, warning=FALSE}
+glimpse(md_supplementary)
 ```
+
+As you can see there are plenty of data to look at. So lets get to it.
 
 ### Do some data summarization
 We will create a data set that summarizes the data for us. We will group by the sex of the victim, the country of the murder and the weapon used. Then we will summarize total murders, cases solved and the percentage solved.
 ```{r serial_killers}
-serial_killers <- murder_data %>%
-  mutate(Solved = Solved %>% factor() %>% as.numeric() %>% subtract(1)) %>%
-  group_by(VicSex, CNTYFIPS, Weapon) %>%
+serial_killers <- md_supplementary %>%
+  mutate(solved = solved %>% factor() %>% as.numeric() %>% subtract(1)) %>%
+  group_by(vicsex, cntyfips, weapon) %>%
   summarise(total = n(),
-            solved = sum(Solved),
-            percentage = mean(Solved)) %>%
+            solved = sum(solved),
+            percentage = mean(solved)) %>%
   ungroup() 
+
+serial_killers %>% head() %>% knitr::kable()
 ```
 
 ### Possible uncaught serial killers
-We want to find possible serial killers. They are (as far as I know) usually men who target women. So we will focus on female victims only, then find counties where more than 33% of a specific type of murder (by choice of weapon) has gone unsolved.
+We want to find possible serial killers. We will focus on female victims only, then find counties where more than 33% of a specific type of murder (by choice of weapon) has gone unsolved.
 ```{r possible_serial_killers}
 possible_serial_killers <- serial_killers %>%
-  filter(VicSex == "Female",
+  filter(vicsex == "Female",
          percentage <= .33) %>%
   mutate(unsolved = total - solved) %>%
   arrange(desc(unsolved))
@@ -48,7 +52,7 @@ possible_serial_killers <- serial_killers %>%
 
 ### Lets have a look
 ```{r summary}
-possible_serial_killers %>% select(-VicSex) %>% head() %>% knitr::kable()
+possible_serial_killers %>% select(-vicsex) %>% head() %>% knitr::kable()
 ```
 
-Here we see that in Fulton County in Georgia we have over a 133 strangled female victims, but only 33 of them have been solved... Is there a potential serial killer lurking in Fulton County?
+Here we see that in San Mateo County in California we have seven women burned to death and none of them have been solved... Is there a potential serial killer lurking?
